@@ -4,13 +4,18 @@ const router =express.Router();
     addPayment,
     getPayments,
     updatePayment,
-    removePayment
+    removePayment,
+    getPaymentById,
+    getCard
  } = require('../controllers/Payment.controller');
 
 router.get("/all", getPayments);
 
-
 router.post("/",addPayment);
+
+router.get("/:id",getPaymentById);
+
+
 
 router.put("/:id",updatePayment);
 

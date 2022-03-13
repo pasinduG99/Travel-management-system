@@ -33,6 +33,19 @@ const getPayments = async(req,res) =>{
     }
 };
 
+const getPaymentById = async(req,res)=>{
+    const payId = req.params.id;
+
+    try{
+        const payments = await Payment.findById(payId);
+        res.json(payments)
+    }catch(error){
+        res.status(400).json(error);
+    }
+};
+
+
+
 const updatePayment = async (req,res) =>{
     const payId = req.params.id;
 
@@ -75,6 +88,7 @@ const removePayment = async (req,res) =>{
 module.exports = {
     addPayment,
     getPayments,
+    getPaymentById,
     updatePayment,
     removePayment
 };
