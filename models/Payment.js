@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const {Schema} = mongoose;
+const Schema = mongoose.Schema;
 
 const paymentSchema = new Schema({
 
@@ -43,9 +43,13 @@ const paymentSchema = new Schema({
         type:String,
         required: true
     },
-   
+    pdate:{
+        type:Date,
+        default:Date.now
+    },
    
 })
 
-module.exports = Payment = mongoose.model('Payment',paymentSchema);
+const Payment = mongoose.model("Payment",paymentSchema);
 
+module.exports = Payment;

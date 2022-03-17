@@ -5,26 +5,29 @@ const cors = require("cors");
  require("dotenv").config();
 const app = express();
 
+const PORT = process.env.PORT || 8070;
+
 app.use(cors());
 app.use(bodyParser.json());
 
-const PORT = process.env.PORT || 8070;
+const URL = process.env.MONGODB_URL;
 
-const uri = process.env.MONGO_URI;
-
-mongoose.connect(uri,{
-    useNewUrlParser:true,UseUnifiedTopology:true})
-    mongoose.connection.once('open',()=>{
-        console.log('MongoDB Connected')
+mongoose.connect(URL,{
     
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
+
+const connection = mongoose.connection;
+connection.once("open", () =>{
+    console.log("Mongodb connection success!");
 })
 
 
-
-app.use("/api/payment",require("./routes/Payment.route"));
+const paymentRouter = require("./routes/payments.js");
+app.use(paymentRouter);
 
 
 app.listen(PORT, () =>{
     console.log(`The port is : ${PORT}`);
-});
-
+})
