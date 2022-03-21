@@ -28,6 +28,13 @@ const paymentRouter = require("./routes/payments.js");
 app.use(paymentRouter);
 
 
+const travelPackageRouter=require("./routes/travelPackage.js");
+app.use("/travelpackages",travelPackageRouter);
+
+
+const packageBookingRouter=require("./routes/Packagebooking.js");
+app.use("/packagebooking",packageBookingRouter);
+
 app.listen(PORT, () =>{
     console.log(`The port is : ${PORT}`);
 })
