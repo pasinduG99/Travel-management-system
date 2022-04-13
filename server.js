@@ -35,6 +35,17 @@ app.use("/travelpackages",travelPackageRouter);
 const packageBookingRouter=require("./routes/Packagebooking.js");
 app.use("/packagebooking",packageBookingRouter);
 
+const AddRouter = require("./routes/Registers.js");
+app.use("/Register",AddRouter);
+
+
+
+
+const UserRoute = require("./routes/UserProfile.js");
+app.use("/User",UserRoute);
+
+
+
 app.listen(PORT, () =>{
     console.log(`The port is : ${PORT}`);
 })
