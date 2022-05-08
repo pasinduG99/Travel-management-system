@@ -36,7 +36,7 @@ const packageBookingRouter=require("./routes/Packagebooking.js");
 app.use("/packagebooking",packageBookingRouter);
 
 const AddRouter = require("./routes/Registers.js");
-app.use("/Register",AddRouter);
+app.use("/user",AddRouter);
 
 const Inquiry = require("./routes/Inquiry");
 app.use("/inquiry",Inquiry);

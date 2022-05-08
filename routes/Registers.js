@@ -1,75 +1,72 @@
 const router = require("express").Router();
-let Reg = require("../models/Register");
 
 
 
-http://localhost:8070/Register/add
 
-router.route("/add").post((req,res)=>{
 
-    const Name = req.body.Name;
-    const Email = req.body.Email;
-    const Num =req.body.Num;
-    const Password = req.body.Password;
-   
 
-    const NewAdd = new Reg({
-        Name,
-        Email,
-        Password,
-        Num
+const User = require('../models/Register');
 
+router.post('/add', (req, res) => {
+    const user = new User({
+        Name : req.body.name,
+        Email : req.body.email,
+        Password : req.body.password,
+        Num : req.body.phone
+    });
+
+    user
+    .save()
+    .then(() => res.json("User Added Successfully..."))
+    .catch((err) => res.json(err.message));
+});
+
+router.get('/view', (req, res) => {
+    User
+    .find()
+    .then(response => res.json(response))
+    .catch((err) => res.json(err.message));
+});
+
+router.post('/log', async(req, res) => {
+    try{
+        const user = await User.findOne({ Email: req.body.email }) ;
+
+        if(!user) {
+            return res.send({message: "Invalid Email"})
+        }else if(user.Password != req.body.password) {
+            return res.send({message: "Invalid Password "})
+        }else{
+            return res.send({ data: user._id, message: "logged in successfully" })
+        }
+    }catch(err){
+
+    }
+   // return res.send(user);
+});
+
+router.put('/edit/:id', (req, res) => {
+    User
+    .findById(req.params.id)
+    .then(response => {
+        response.Name = req.body.name,
+        response.Email =  req.body.email,
+        response.Password =  req.body.password,
+        response.Num =  req.body.phone
+
+        response
+        .save()
+        .then(() => res.json("User Updated Successfully..."))
+        .catch((err) => res.json(err.message));
     })
-    
+    .catch((err) => res.json(err.message));
+});
 
-    NewAdd.save().then(()=>{
-        res.json("Registration Added")
-    }).catch((err)=>{
-        console.log(err);
-        res.json(err)
-        console.log("reg err");
-    })
-
-
-})
-
-
-router.route("/login").post((req,res)=>{
-
-    const Email = req.body.Email;
-    const Password = req.body.Password;
-   
-
-    
-    Reg.findOne({Email:Email , Password:Password}).then((Registers)=>{
-        
-       if (Registers == null){
-
-        success:false;
-
-        
-
-       }else{
-           success:true;
-          
-          res.json({
-            id:Registers._id,
-            Name:Registers.Name,
-            Email:Registers.Email,
-            Password:Registers.Password
-            
-           
-        });
-        } 
-
-    }).catch((err)=>{
-       
-        res.json("Validation Faild");
-    })
-})
-
-   
-
-
+router.delete('/delete/:id', (req, res) => {
+    User
+    .findByIdAndDelete(req.params.id)
+    .then(() => res.json("User deleted successfully..."))
+    .catch((err) => resjson(err.message));
+});
 
 module.exports = router;

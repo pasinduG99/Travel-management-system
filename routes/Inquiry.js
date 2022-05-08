@@ -25,6 +25,13 @@ router.get('/view', (req, res) => {
     .catch((err) => res.json(err.message));
 });
 
+router.get('/view/:id', (req, res) => {
+    Inquiry
+    .findById(req.params.id)
+    .then(response => res.json(response))
+    .catch((err) => res.json(err.message));
+});
+
 router.put('/edit/:id', (req, res) => {
     Inquiry
     .findById(req.params.id)
@@ -47,7 +54,7 @@ router.delete('/delete/:id', (req, res) => {
     Inquiry
     .findByIdAndDelete(req.params.id)
     .then(() => res.json("Inquiry deleted successfully..."))
-    .catch((err) => resjson(err.message));
+    .catch((err) => res.json(err.message));
 });
 
 module.exports = router;
